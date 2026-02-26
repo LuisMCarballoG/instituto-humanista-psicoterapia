@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 import { jsPDF } from 'jspdf';
 import { supabase } from '../../lib/supabase';
 import { ArrowLeft, Save, Loader2 } from 'lucide-react';
@@ -35,21 +35,22 @@ const CreateCertificate = () => {
 
             if (!certificateRef.current) throw new Error("Preview div ref not found");
 
-            // 2. Generate PDF via html2canvas
-            const canvas = await html2canvas(certificateRef.current, {
-                scale: 2, // High resolution
-                useCORS: true,
-                logging: false,
+            // 2. Generate PDF via html-to-image
+            const imgData = await toPng(certificateRef.current, {
+                pixelRatio: 2, // High resolution
+                skipFonts: false,
             });
 
-            const imgData = canvas.toDataURL('image/png');
+            const width = 842;
+            const height = 595;
+
             const pdf = new jsPDF({
                 orientation: 'landscape',
                 unit: 'px',
-                format: [canvas.width, canvas.height]
+                format: [width, height]
             });
 
-            pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
+            pdf.addImage(imgData, 'PNG', 0, 0, width, height);
             const pdfBlob = pdf.output('blob');
 
             // 3. Upload to Supabase Storage
