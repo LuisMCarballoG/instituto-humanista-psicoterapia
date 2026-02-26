@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Instituto Humanista - Plataforma de Certificados
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este proyecto contiene el sitio web del Instituto Humanista y la plataforma para la emisión y validación de certificados digitales con código QR integrando Supabase.
 
-Currently, two official plugins are available:
+## Requisitos Previos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Node.js**: Versión 18+ recomendada
+- **Cuenta en Supabase**: (Las credenciales de configuración ya están seteadas para desarrollo local, ver `.env`)
 
-## React Compiler
+## Instrucciones para Levantar en Local
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Sigue estos pasos para probar el proyecto íntegramente en tu máquina:
 
-## Expanding the ESLint configuration
+### 1. Instalar Dependencias
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Abre una terminal en la raíz de este proyecto y ejecuta:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Configurar Entorno Local
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Asegúrate de tener un archivo `.env` en la raíz de tu proyecto (junto a `package.json`). Ya he configurado uno basándome en los datos que me proporcionaste. Si no existe, créalo con el siguiente contenido:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_SUPABASE_URL=https://ovdtrpygbublpltvqvwd.supabase.co
+VITE_SUPABASE_ANON_KEY=sb_publishable_Gted9hcncjaiog-OMPjQaw_kcL7wA7c
 ```
+
+### 3. Configurar la Base de Datos (Supabase)
+
+Si esta es una base de datos recién creada, necesitas preparar las tablas y bóvedas (Storage) para que los certificados puedan guardarse y leerse.
+
+1. Ve a tu panel de control en [Supabase](https://supabase.com).
+2. Entra a tu proyecto (URL: `ovdtrpygbublpltvqvwd`).
+3. En el menú izquierdo, entra al **SQL Editor**.
+4. Copia todo el contenido del archivo `supabase/schema.sql` (que se encuentra en este proyecto) y pégalo en el editor.
+5. Haz clic en **Run**. Esto creará la tabla `certificates`, el bucket `certificates` en Storage y establecerá todas las reglas de seguridad necesarias.
+
+### 4. Crear un Usuario Administrador
+
+Para poder entrar al Dashboard, ocupas un usuario.
+1. En tu panel de Supabase, ve a **Authentication** -> **Users**.
+2. Haz clic en **Add User** -> **Create New User**.
+3. Ingresa un email (ej. `admin@institutohumanista.com`) y una contraseña segura, y marca "Auto Confirm User".
+4. Usa esas credenciales más adelante para iniciar sesión en la app.
+
+### 5. Iniciar el Servidor Local
+
+Finalmente, levanta el proyecto ejecutando el comando:
+
+```bash
+npm run dev
+```
+
+Te aparecerá una URL local (usualmente `http://localhost:5173`). Haz Ctrl+Clic para abrirla en el navegador. 
+- Puedes ver la **Landing Page**.
+- Entrar a **Portal Admin** e iniciar sesión con el usuario que creaste.
+- Generar nuevos certificados.
+- Comprobar que el PDF se genera, se sube correctamente al storage y es validable escaneando o buscando su código UUID.
+
+## Estructura Principal del Proyecto
+
+- `src/pages/Home.tsx` - Landing page pública
+- `src/pages/Scan.tsx` - Cámara para escanear y validar QR web
+- `src/pages/CertificateView.tsx` - Visor de certificados (Donde vive el PDF online)
+- `src/pages/admin/` - Rutas protegidas (Login, Dashboard, Creador de PDFs)
+- `supabase/schema.sql` - Comando SQL fundacional de tu proyecto.
