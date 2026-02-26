@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sun-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#facc15" />
+      <stop offset="100%" stop-color="#eab308" />
+    </linearGradient>
+    <linearGradient id="blue-swoosh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#0284c7" />
+    </linearGradient>
+    <linearGradient id="red-swoosh" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444" />
+      <stop offset="100%" stop-color="#b91c1c" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="4" stdDeviation="4" flood-opacity="0.1" />
+    </filter>
+  </defs>
+
+  <!-- Left Icon Mark -->
+  <g transform="translate(80, 50)" filter="url(#shadow)">
+    <!-- Blue Swoosh -->
+    <path d="M120,-10 C40,0 -20,100 20,220 C60,340 180,280 180,280 C180,280 60,300 20,200 C-20,100 60,20 120,-10 Z" fill="url(#blue-swoosh)" />
+    <!-- Red Swoosh -->
+    <path d="M40,290 C120,320 280,280 320,160 C360,40 280,-20 280,-20 C280,-20 340,60 280,180 C220,300 120,330 40,290 Z" fill="url(#red-swoosh)" />
+    <!-- The Sun -->
+    <circle cx="160" cy="140" r="55" fill="url(#sun-grad)" />
+  </g>
+
+  <!-- Giant "IH" -->
+  <text x="400" y="280" font-family="'Times New Roman', Georgia, serif" font-weight="bold" font-size="280" fill="#1e3a8a" letter-spacing="-10">IH</text>
+
+  <!-- Instituto Humanista -->
+  <text x="50" y="380" font-family="'Times New Roman', Georgia, serif" font-weight="bold" font-size="75" fill="#1e3a8a">Instituto Humanista</text>
+
+  <!-- Catchphrase -->
+  <text x="60" y="470" font-family="'Brush Script MT', 'Caveat', cursive, italic" font-style="italic" font-size="70" fill="#dc2626">Existir es... elegirnos</text>
+</svg>
