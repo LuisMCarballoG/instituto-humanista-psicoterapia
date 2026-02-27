@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { toPng } from 'html-to-image';
@@ -20,17 +20,21 @@ const CreateCertificate = () => {
     const nameRef = useRef<HTMLHeadingElement>(null);
     const [nameFontSize, setNameFontSize] = useState(36);
 
-    useEffect(() => {
-        setNameFontSize(36);
-    }, [fullName]);
+    useLayoutEffect(() => {
+        const el = nameRef.current;
+        if (!el) return;
 
-    useEffect(() => {
-        if (nameRef.current) {
-            if (nameRef.current.scrollWidth > nameRef.current.clientWidth && nameFontSize > 14) {
-                setNameFontSize(prev => prev - 1);
-            }
+        // Measure synchronously before browser repaints
+        el.style.fontSize = '36px';
+        let size = 36;
+
+        while (el.scrollWidth > el.clientWidth && size > 14) {
+            size -= 1;
+            el.style.fontSize = `${size}px`;
         }
-    }, [fullName, nameFontSize]);
+
+        setNameFontSize(size);
+    }, [fullName]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
