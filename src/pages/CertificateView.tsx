@@ -11,6 +11,11 @@ const CertificateView = () => {
     const [loading, setLoading] = useState(true);
     const [cert, setCert] = useState<Certificate | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+    }, []);
 
     useEffect(() => {
         const fetchCertificate = async () => {
@@ -137,9 +142,9 @@ const CertificateView = () => {
                     {/* PDF Viewer */}
                     <div className="flex-grow bg-slate-200/50 p-4 md:p-8 flex justify-center items-start overflow-auto">
                         <iframe
-                            src={`${cert.pdf_url}#toolbar=0`}
+                            src={isMobile ? `https://docs.google.com/viewer?url=${encodeURIComponent(cert.pdf_url)}&embedded=true` : `${cert.pdf_url}#toolbar=0`}
                             title="Certificado"
-                            className="w-full max-w-3xl h-full min-h-[500px] shadow-2xl bg-white"
+                            className="w-full max-w-3xl h-full min-h-[500px] shadow-2xl bg-white border-none"
                         />
                     </div>
                 </div>
