@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { QRCodeSVG } from 'qrcode.react';
 import { toPng } from 'html-to-image';
@@ -17,6 +17,20 @@ const CreateCertificate = () => {
     const [previewUuid, setPreviewUuid] = useState(crypto.randomUUID());
 
     const certificateRef = useRef<HTMLDivElement>(null);
+    const nameRef = useRef<HTMLHeadingElement>(null);
+    const [nameFontSize, setNameFontSize] = useState(36);
+
+    useEffect(() => {
+        setNameFontSize(36);
+    }, [fullName]);
+
+    useEffect(() => {
+        if (nameRef.current) {
+            if (nameRef.current.scrollWidth > nameRef.current.clientWidth && nameFontSize > 14) {
+                setNameFontSize(prev => prev - 1);
+            }
+        }
+    }, [fullName, nameFontSize]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -206,8 +220,12 @@ const CreateCertificate = () => {
                                 <p className="text-md font-sans text-slate-500 mb-2 uppercase tracking-widest mt-2">A favor de:</p>
 
                                 {/* Name Layout */}
-                                <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative w-full max-w-2xl px-8">
-                                    <h2 className="text-[36px] leading-tight font-serif font-bold text-slate-800 z-10 break-words text-center w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                                <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative w-full max-w-2xl px-8 overflow-hidden">
+                                    <h2
+                                        ref={nameRef}
+                                        className="leading-tight font-serif font-bold text-slate-800 z-10 text-center w-full whitespace-nowrap"
+                                        style={{ fontSize: `${nameFontSize}px` }}
+                                    >
                                         {fullName || "Nombre del Participante"}
                                     </h2>
                                 </div>
@@ -220,12 +238,12 @@ const CreateCertificate = () => {
                             </div>
 
                             {/* Footer (Signatures) */}
-                            <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center justify-center z-10 pointer-events-none">
+                            <div className="absolute bottom-14 left-0 right-0 flex flex-col items-center justify-center z-10 pointer-events-none">
                                 {/* Center: Dirección General */}
-                                <div className="text-center w-80 border-t border-slate-400 mx-auto pt-2">
+                                <div className="text-center w-80 border-t border-slate-400 mx-auto">
                                     <p className="font-bold text-slate-800 text-lg">Jorge Leyva</p>
-                                    <p className="font-bold text-[#004A99] text-md mt-1">Máster en Psicología Clínica y de la Salud</p>
-                                    <p className="font-medium text-slate-500 text-sm mt-0.5">Cédula Profesional 12345678</p>
+                                    <p className="font-bold text-[#004A99] text-sm">Máster en Psicología Clínica y de la Salud</p>
+                                    <p className="font-bold text-[#004A99] text-sm mt-0.5">Cédula Profesional 12345678</p>
                                 </div>
                             </div>
 
