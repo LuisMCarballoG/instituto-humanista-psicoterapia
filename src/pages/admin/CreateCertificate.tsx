@@ -188,53 +188,56 @@ const CreateCertificate = () => {
                             style={{ width: '842px', height: '595px' }}
                         >
                             {/* Background watermark or borders can go here */}
-                            <div className="absolute inset-4 border-2 border-primary-800/20 rounded-xl pointer-events-none"></div>
-                            <div className="absolute inset-6 border border-primary-800/10 rounded-lg pointer-events-none"></div>
-
-                            {/* Header Logo */}
-                            <div className="mt-8">
-                                <img src="/logo.svg" alt="Instituto Humanista" className="h-28 object-contain" crossOrigin="anonymous" />
+                            {/* Absolute Top-Left Logo + Text (Horizontal Layout) */}
+                            <div className="absolute top-10 left-12 flex items-center space-x-6 z-20">
+                                <img src="/logo.png" alt="Logo" className="h-20 object-contain" crossOrigin="anonymous" />
+                                <h1 className="text-3xl font-serif font-bold text-slate-800 tracking-wide mt-2">
+                                    Instituto Humanista de Psicoterapia
+                                </h1>
                             </div>
 
                             {/* Body Text */}
-                            <div className="text-center mt-4">
+                            <div className="text-center mt-28 w-full px-12 z-10 flex flex-col items-center">
                                 <p className="text-lg font-serif italic text-slate-500 mb-6">Otorga el presente</p>
                                 <h1 className="text-5xl font-serif font-bold text-primary-900 tracking-wide uppercase mb-8">
                                     Certificado
                                 </h1>
-                                <p className="text-md font-sans text-slate-600 mb-2 uppercase tracking-widest">A favor de:</p>
-                                <h2 className="text-4xl font-serif font-bold text-slate-800 border-b-2 border-slate-300 inline-block pb-2 px-12 min-w-[400px]">
-                                    {fullName || "Nombre del Participante"}
-                                </h2>
+                                <p className="text-md font-sans text-slate-600 mb-4 uppercase tracking-widest mt-4">A favor de:</p>
 
-                                <p className="max-w-xl mx-auto mt-6 text-sm text-slate-700 leading-relaxed font-sans">
+                                {/* Name + inline QR Layout */}
+                                <div className="flex items-end justify-center w-full max-w-3xl gap-4">
+                                    <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative">
+                                        <h2 className="text-4xl font-serif font-bold text-slate-800 z-10 break-words text-center px-4 w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word', maxWidth: '550px' }}>
+                                            {fullName || "Nombre del Participante"}
+                                        </h2>
+                                    </div>
+                                    <div className="flex flex-col items-center flex-shrink-0 relative z-0" style={{ marginBottom: '-6px' }}>
+                                        <div className="bg-white p-2 border border-slate-200 rounded-lg shadow-sm">
+                                            <QRCodeSVG value={validationUrl} size={65} level="H" includeMargin={false} />
+                                        </div>
+                                    </div>
+                                </div>
+                                <p className="text-[9px] text-slate-400 mt-1 max-w-[200px] text-center ml-auto mr-0">Validar: ID {previewUuid.split('-')[0]}</p>
+
+                                <p className="max-w-2xl mx-auto mt-8 text-[15px] text-slate-700 leading-relaxed font-sans">
                                     Por su destacada participación y compromiso con los procesos de desarrollo integral,
                                     adquiriendo herramientas valiosas para el crecimiento personal y profesional con un
                                     enfoque profundamente humano.
                                 </p>
                             </div>
 
-                            {/* Footer (Dates, Signatures, QR) */}
-                            <div className="w-full flex justify-between items-end mt-auto px-12 mb-4">
-                                <div className="text-center w-64 border-t border-slate-300 pt-2">
+                            {/* Footer (Signatures) */}
+                            <div className="w-full flex justify-between items-end mt-auto px-16 pb-6">
+                                {/* Center: Dirección General */}
+                                <div className="text-center w-64 border-t border-slate-400 pt-2 mb-2 mx-auto">
                                     <p className="font-bold text-slate-800">Dirección General</p>
-                                    <p className="text-xs text-slate-500">Instituto Humanista</p>
                                 </div>
 
-                                <div className="flex flex-col items-center">
-                                    <div className="bg-white p-2 border border-slate-200 rounded-xl shadow-sm">
-                                        <QRCodeSVG value={validationUrl} size={80} level="H" includeMargin={false} />
-                                    </div>
-                                    <p className="text-[10px] text-slate-400 mt-2 text-center">
-                                        Verificar autenticidad escaneando
-                                    </p>
-                                    <p className="text-[8px] font-mono text-slate-300">{previewUuid}</p>
-                                </div>
-
-                                <div className="text-center w-64 border-t border-slate-300 pt-2">
-                                    <p className="text-slate-800 font-medium">Fecha de Emisión</p>
-                                    <p className="text-sm font-bold text-slate-600">
-                                        {certDate ? new Date(certDate).toLocaleDateString() : '--'}
+                                {/* Right: Fecha de Emisión */}
+                                <div className="text-center w-64 border-t border-slate-400 pt-2 mb-2 mx-auto">
+                                    <p className="font-bold text-slate-800">Fecha de Emisión</p>
+                                    <p className="text-sm font-medium text-slate-600 capitalize">
+                                        {certDate ? new Date(certDate + "T12:00:00").toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : '--'}
                                     </p>
                                 </div>
                             </div>

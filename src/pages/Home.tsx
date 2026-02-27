@@ -41,12 +41,10 @@ const Home = () => {
             {/* Navbar Placeholder */}
             <header className="fixed top-0 w-full z-50 glass border-b border-primary-100 transition-all duration-300">
                 <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center space-x-3 cursor-pointer" onClick={() => navigate('/')}>
-                        <img src="/logo.svg" alt="Instituto Humanista" className="h-10 w-auto" />
-                        <div className="flex flex-col">
-                            <span className="font-serif font-bold text-primary-900 text-lg leading-tight">Instituto Humanista</span>
-                            <span className="font-cursive text-accent-600 text-sm italic leading-none hidden sm:block">Existir es... elegirnos</span>
-                        </div>
+                    <div className="flex items-center space-x-4 cursor-pointer" onClick={() => navigate('/')}>
+                        <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+                        <span className="font-serif font-bold text-primary-900 text-xl leading-tight hidden sm:block">Instituto Humanista de Psicoterapia</span>
+                        <span className="font-serif font-bold text-primary-900 text-xl leading-tight sm:hidden">IHP</span>
                     </div>
                     <nav className="hidden md:flex space-x-8">
                         <a href="#servicios" className="text-slate-600 hover:text-primary-600 font-medium transition-colors">Servicios</a>
@@ -151,11 +149,10 @@ const Home = () => {
             {/* Minimal Footer */}
             <footer className="bg-slate-900 py-12 border-t border-slate-800">
                 <div className="container mx-auto px-6 text-center">
-                    <img src="/logo.svg" alt="Instituto Humanista" className="h-10 w-auto mx-auto mb-6 opacity-80 mix-blend-screen grayscale" />
+                    <img src="/logo.png" alt="Instituto Humanista de Psicoterapia" className="h-12 w-auto mx-auto mb-6 opacity-80 mix-blend-screen grayscale" />
                     <p className="text-slate-400 text-sm mb-2">
-                        © {new Date().getFullYear()} Instituto Humanista. Todos los derechos reservados.
+                        © {new Date().getFullYear()} Instituto Humanista de Psicoterapia. Todos los derechos reservados.
                     </p>
-                    <p className="text-slate-500 text-xs italic font-cursive">Existir es... elegirnos</p>
                 </div>
             </footer>
         </div>
