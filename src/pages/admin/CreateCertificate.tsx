@@ -189,27 +189,16 @@ const CreateCertificate = () => {
                         >
                             {/* Background watermark or borders can go here */}
                             {/* Header: Logo + Text (Horizontal Layout, Vertically Centered) */}
-                            <div className="absolute top-10 left-12 flex items-center space-x-6 z-20">
-                                <img src="/logo.png" alt="Logo" className="h-24 object-contain" crossOrigin="anonymous" />
+                            <div className="absolute top-10 left-6 flex items-center space-x-6 z-20">
+                                <img src="/logo.png" alt="Logo" className="h-14 object-contain mt-2" crossOrigin="anonymous" />
                                 <h1 className="text-4xl font-serif font-bold text-[#004A99] tracking-wide mt-0 leading-tight">
                                     Instituto Humanista de Psicoterapia
                                 </h1>
                             </div>
 
-                            {/* Absolute Right: Large QR Code */}
-                            <div className="absolute top-48 right-16 flex flex-col items-center z-20">
-                                <div className="bg-white p-3 border border-slate-200 rounded-xl shadow-sm">
-                                    <QRCodeSVG value={validationUrl} size={110} level="H" includeMargin={false} />
-                                </div>
-                                <p className="text-[11px] text-slate-500 mt-2 text-center font-medium">
-                                    Validar autenticidad
-                                </p>
-                                <p className="text-[9px] font-mono text-slate-400 mt-1">ID: {previewUuid.split('-')[0]}</p>
-                            </div>
-
                             {/* Body Text Container (Moved Up) */}
-                            <div className="text-center mt-36 w-full px-12 z-10 flex flex-col items-center">
-                                <p className="text-lg font-serif italic text-slate-500 mb-4">Otorga el presente</p>
+                            <div className="text-center mt-18 w-full px-12 z-10 flex flex-col items-center">
+                                <p className="text-lg font-serif italic text-slate-500">Otorga el presente</p>
                                 <h1 className="text-6xl font-serif font-bold text-primary-900 tracking-wider uppercase mb-6">
                                     Certificado
                                 </h1>
@@ -218,12 +207,12 @@ const CreateCertificate = () => {
 
                                 {/* Name Layout */}
                                 <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative w-full max-w-2xl px-8">
-                                    <h2 className="text-[42px] leading-tight font-serif font-bold text-slate-800 z-10 break-words text-center w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                                    <h2 className="text-[36px] leading-tight font-serif font-bold text-slate-800 z-10 break-words text-center w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
                                         {fullName || "Nombre del Participante"}
                                     </h2>
                                 </div>
 
-                                <p className="max-w-xl mx-auto mt-6 text-[15px] text-slate-700 leading-snug font-sans">
+                                <p className="max-w-xl mx-auto mt-4 text-[15px] text-slate-700 leading-snug font-sans">
                                     Por su destacada participación y compromiso con los procesos de desarrollo integral,
                                     adquiriendo herramientas valiosas para el crecimiento personal y profesional con un
                                     enfoque profundamente humano.
@@ -231,26 +220,34 @@ const CreateCertificate = () => {
                             </div>
 
                             {/* Footer (Signatures) */}
-                            <div className="w-full flex justify-between items-end mt-auto px-16 pb-6">
+                            <div className="absolute bottom-6 left-0 right-0 flex flex-col items-center justify-center z-10 pointer-events-none">
                                 {/* Center: Dirección General */}
-                                <div className="text-center w-64 border-t border-slate-400 pt-2 mb-2 mx-auto">
-                                    <p className="font-bold text-slate-800">Dirección General</p>
-                                </div>
-
-                                {/* Right: Fecha de Emisión */}
-                                <div className="text-center w-64 border-t border-slate-400 pt-2 mb-2 mx-auto">
-                                    <p className="font-bold text-slate-800">Fecha de Emisión</p>
-                                    <p className="text-sm font-medium text-slate-600 capitalize">
-                                        {certDate ? new Date(certDate + "T12:00:00").toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : '--'}
-                                    </p>
+                                <div className="text-center w-80 border-t border-slate-400 mx-auto pt-2">
+                                    <p className="font-bold text-slate-800 text-lg">Jorge Leyva</p>
+                                    <p className="font-bold text-[#004A99] text-md mt-1">Máster en Psicología Clínica y de la Salud</p>
+                                    <p className="font-medium text-slate-500 text-sm mt-0.5">Cédula Profesional 12345678</p>
                                 </div>
                             </div>
 
+                            {/* Absolute Date and QR (Removed flex container wrapper to allow absolute positioning of Center block) */}
+                            <div className="absolute bottom-4 right-10 flex flex-col items-center z-20">
+                                <div className="bg-white">
+                                    <QRCodeSVG value={validationUrl} size={130} level="H" includeMargin={false} />
+                                </div>
+                                <p className="text-[11px] text-slate-500 text-center font-medium">
+                                    Validar autenticidad
+                                </p>
+                                <p className="text-[12px] font-mono text-slate-400">ID: {previewUuid.split('-')[0]}</p>
+                            </div>
+                            <p className="absolute bottom-4 left-10 text-sm font-medium text-slate-400">
+                                Certificado emitido el {certDate ? new Date(certDate + "T12:00:00").toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : '--'}
+                            </p>
                         </div>
                     </div>
                 </div>
             </main>
         </div>
+
     );
 };
 
