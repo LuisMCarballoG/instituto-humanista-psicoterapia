@@ -117,27 +117,31 @@ const CreateCertificate = () => {
     const validationUrl = `${window.location.origin}/certificate/${previewUuid}`;
 
     return (
-        <div className="min-h-screen bg-slate-50 flex flex-col">
-            <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div className="min-h-screen bg-slate-900 flex flex-col relative overflow-hidden">
+            {/* Background Decor */}
+            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-primary-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-sun-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <header className="bg-white/5 backdrop-blur-xl border-b border-white/10 sticky top-0 z-10 w-full">
                 <div className="container mx-auto px-6 py-4 flex items-center">
                     <button
                         onClick={() => navigate('/admin/dashboard')}
-                        className="text-slate-500 hover:text-primary-600 flex items-center transition-colors font-medium mr-4"
+                        className="text-slate-400 hover:text-white flex items-center transition-colors font-medium mr-4"
                     >
                         <ArrowLeft className="w-5 h-5 mr-1" /> Volver
                     </button>
-                    <span className="font-serif font-bold text-slate-800 text-xl border-l pl-4 border-slate-200">
+                    <span className="font-serif font-bold text-white text-xl border-l pl-4 border-white/20">
                         Nuevo Certificado
                     </span>
                 </div>
             </header>
 
-            <main className="container mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8">
+            <main className="container mx-auto px-6 py-8 flex flex-col lg:flex-row gap-8 relative z-10">
 
                 {/* Form Column */}
                 <div className="w-full lg:w-1/3">
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 sticky top-24">
-                        <h2 className="text-lg font-bold text-slate-800 mb-6">Detalles del Participante</h2>
+                    <div className="bg-white/10 backdrop-blur-xl p-6 rounded-2xl shadow-2xl border border-white/20 sticky top-24">
+                        <h2 className="text-lg font-bold text-white mb-6">Detalles del Participante</h2>
 
                         {error && (
                             <div className="bg-red-50 text-red-500 text-sm p-3 rounded-lg mb-4 border border-red-100">
@@ -147,33 +151,33 @@ const CreateCertificate = () => {
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">Nombre Completo</label>
+                                <label className="block text-sm font-semibold text-slate-300 mb-1">Nombre Completo</label>
                                 <input
                                     type="text"
                                     value={fullName}
                                     onChange={(e) => setFullName(e.target.value)}
                                     placeholder="Ej. Juan Pérez"
                                     required
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                                    className="w-full px-4 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1">Fecha de Certificación</label>
+                                <label className="block text-sm font-semibold text-slate-300 mb-1">Fecha de Certificación</label>
                                 <input
                                     type="date"
                                     value={certDate}
                                     onChange={(e) => setCertDate(e.target.value)}
                                     required
-                                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
+                                    className="w-full px-4 py-2 bg-slate-800/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 outline-none transition-all"
                                 />
                             </div>
 
-                            <div className="pt-4 border-t border-slate-100">
+                            <div className="pt-4 border-t border-white/10">
                                 <button
                                     type="submit"
                                     disabled={loading || !fullName}
-                                    className="w-full bg-primary-600 hover:bg-primary-700 disabled:bg-slate-300 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all shadow-md"
+                                    className="w-full bg-primary-600 hover:bg-primary-700 disabled:opacity-50 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center transition-all shadow-md"
                                 >
                                     {loading ? (
                                         <Loader2 className="w-5 h-5 animate-spin" />
@@ -184,7 +188,7 @@ const CreateCertificate = () => {
                                         </>
                                     )}
                                 </button>
-                                <p className="text-xs text-slate-500 text-center mt-3">
+                                <p className="text-xs text-slate-400 text-center mt-3">
                                     Se creará el PDF y se subirá automáticamente a la base de datos segura.
                                 </p>
                             </div>
@@ -193,8 +197,8 @@ const CreateCertificate = () => {
                 </div>
 
                 {/* Certificate Preview Column */}
-                <div className="w-full lg:w-2/3 overflow-x-auto bg-slate-200/50 p-4 sm:p-8 rounded-2xl border border-slate-200 items-center flex flex-col">
-                    <p className="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-4">Vista Previa del Documento</p>
+                <div className="w-full lg:w-2/3 overflow-x-auto bg-white/5 backdrop-blur-xl p-4 sm:p-8 rounded-2xl shadow-2xl border border-white/10 items-center flex flex-col">
+                    <p className="text-sm font-semibold text-slate-400 uppercase tracking-widest mb-4">Vista Previa del Documento</p>
 
                     {/* A4 Landscape Ratio Wrapper (1123 x 794 px approx) */}
                     <div className="shadow-2xl overflow-hidden bg-white relative shrink-0" style={{ width: '842px', height: '595px' }}>
