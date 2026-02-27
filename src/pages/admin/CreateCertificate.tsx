@@ -188,38 +188,42 @@ const CreateCertificate = () => {
                             style={{ width: '842px', height: '595px' }}
                         >
                             {/* Background watermark or borders can go here */}
-                            {/* Absolute Top-Left Logo + Text (Horizontal Layout) */}
+                            {/* Header: Logo + Text (Horizontal Layout, Vertically Centered) */}
                             <div className="absolute top-10 left-12 flex items-center space-x-6 z-20">
-                                <img src="/logo.png" alt="Logo" className="h-20 object-contain" crossOrigin="anonymous" />
-                                <h1 className="text-3xl font-serif font-bold text-slate-800 tracking-wide mt-2">
+                                <img src="/logo.png" alt="Logo" className="h-24 object-contain" crossOrigin="anonymous" />
+                                <h1 className="text-4xl font-serif font-bold text-[#004A99] tracking-wide mt-0 leading-tight">
                                     Instituto Humanista de Psicoterapia
                                 </h1>
                             </div>
 
-                            {/* Body Text */}
-                            <div className="text-center mt-28 w-full px-12 z-10 flex flex-col items-center">
-                                <p className="text-lg font-serif italic text-slate-500 mb-6">Otorga el presente</p>
-                                <h1 className="text-5xl font-serif font-bold text-primary-900 tracking-wide uppercase mb-8">
+                            {/* Absolute Right: Large QR Code */}
+                            <div className="absolute top-48 right-16 flex flex-col items-center z-20">
+                                <div className="bg-white p-3 border border-slate-200 rounded-xl shadow-sm">
+                                    <QRCodeSVG value={validationUrl} size={110} level="H" includeMargin={false} />
+                                </div>
+                                <p className="text-[11px] text-slate-500 mt-2 text-center font-medium">
+                                    Validar autenticidad
+                                </p>
+                                <p className="text-[9px] font-mono text-slate-400 mt-1">ID: {previewUuid.split('-')[0]}</p>
+                            </div>
+
+                            {/* Body Text Container (Moved Up) */}
+                            <div className="text-center mt-36 w-full px-12 z-10 flex flex-col items-center">
+                                <p className="text-lg font-serif italic text-slate-500 mb-4">Otorga el presente</p>
+                                <h1 className="text-6xl font-serif font-bold text-primary-900 tracking-wider uppercase mb-6">
                                     Certificado
                                 </h1>
-                                <p className="text-md font-sans text-slate-600 mb-4 uppercase tracking-widest mt-4">A favor de:</p>
 
-                                {/* Name + inline QR Layout */}
-                                <div className="flex items-end justify-center w-full max-w-3xl gap-4">
-                                    <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative">
-                                        <h2 className="text-4xl font-serif font-bold text-slate-800 z-10 break-words text-center px-4 w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word', maxWidth: '550px' }}>
-                                            {fullName || "Nombre del Participante"}
-                                        </h2>
-                                    </div>
-                                    <div className="flex flex-col items-center flex-shrink-0 relative z-0" style={{ marginBottom: '-6px' }}>
-                                        <div className="bg-white p-2 border border-slate-200 rounded-lg shadow-sm">
-                                            <QRCodeSVG value={validationUrl} size={65} level="H" includeMargin={false} />
-                                        </div>
-                                    </div>
+                                <p className="text-md font-sans text-slate-500 mb-2 uppercase tracking-widest mt-2">A favor de:</p>
+
+                                {/* Name Layout */}
+                                <div className="flex-grow flex flex-col items-center border-b-2 border-slate-300 pb-2 relative w-full max-w-2xl px-8">
+                                    <h2 className="text-[42px] leading-tight font-serif font-bold text-slate-800 z-10 break-words text-center w-full" style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}>
+                                        {fullName || "Nombre del Participante"}
+                                    </h2>
                                 </div>
-                                <p className="text-[9px] text-slate-400 mt-1 max-w-[200px] text-center ml-auto mr-0">Validar: ID {previewUuid.split('-')[0]}</p>
 
-                                <p className="max-w-2xl mx-auto mt-8 text-[15px] text-slate-700 leading-relaxed font-sans">
+                                <p className="max-w-xl mx-auto mt-6 text-[15px] text-slate-700 leading-snug font-sans">
                                     Por su destacada participación y compromiso con los procesos de desarrollo integral,
                                     adquiriendo herramientas valiosas para el crecimiento personal y profesional con un
                                     enfoque profundamente humano.
