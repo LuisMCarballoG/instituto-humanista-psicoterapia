@@ -248,22 +248,19 @@ const CreateCertificate = () => {
                             {/* Footer (Signatures) */}
                             <div className="absolute bottom-14 left-0 right-0 flex flex-col items-center justify-center z-10 pointer-events-none">
                                 {/* Center: Dirección General */}
-                                <div className="text-center w-80 border-t border-slate-400 mx-auto">
+                                <div className="text-center w-max min-w-[320px] px-6 border-t border-slate-400 mx-auto pt-2">
                                     <p className="font-bold text-slate-800 text-lg">Jorge Leyva</p>
                                     <p className="font-bold text-[#004A99] text-sm">Máster en Psicología Clínica y de la Salud</p>
                                     <p className="font-bold text-[#004A99] text-sm mt-0.5">Cédula Profesional 12345678</p>
                                 </div>
                             </div>
 
-                            {/* Absolute Date and QR (Removed flex container wrapper to allow absolute positioning of Center block) */}
-                            <div className="absolute bottom-4 right-10 flex flex-col items-center z-20">
-                                <div className="bg-white">
+                            {/* Absolute Date and QR */}
+                            <div className="absolute bottom-4 right-10 flex flex-col items-end z-20">
+                                <div className="bg-white mb-2">
                                     <QRCodeSVG value={validationUrl} size={130} level="H" includeMargin={false} />
                                 </div>
-                                <p className="text-[11px] text-slate-500 text-center font-medium">
-                                    Validar autenticidad
-                                </p>
-                                <p className="text-[12px] font-mono text-slate-400">ID: {previewUuid.split('-')[0]}</p>
+                                <p className="text-[11px] font-mono text-slate-400">ID: {previewUuid}</p>
                             </div>
                             <p className="absolute bottom-4 left-10 text-sm font-medium text-slate-400">
                                 Certificado emitido el {certDate ? new Date(certDate + "T12:00:00").toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }) : '--'}
